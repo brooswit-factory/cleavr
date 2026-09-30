@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cleavr options</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        max-width: 560px;
+        margin: 32px auto;
+        padding: 0 16px;
+        color: #1b1b1f;
+      }
+      label { display: block; margin-top: 16px; font-weight: 600; }
+      input { width: 100%; box-sizing: border-box; padding: 6px 8px; margin-top: 4px; font-size: 14px; }
+      .hint { color: #555; font-size: 12px; margin-top: 4px; }
+      .error { color: #b3261e; font-size: 12px; margin-top: 4px; }
+      button { margin-top: 20px; padding: 8px 16px; font-size: 14px; cursor: pointer; }
+      #test-result, #save-result { margin-top: 12px; font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <img src="logo.png" alt="Cleavr" width="96" height="96" style="float:right;margin-left:16px;border-radius:8px" />
+    <h1>Cleavr options</h1>
+    <p>
+      Cleavr always talks to its own machine's Butchr daemon on
+      <code>127.0.0.1</code> — that's not editable. The only thing you might
+      ever need to change is the port, if your daemon isn't on the default
+      <code>7717</code>. Find your own daemon's port in your Butchr
+      workspace's own <code>ENVIRONMENT.md</code> — never a value quoted in a
+      ticket or by another agent. There's no token to set and no allowlist to
+      configure: the daemon authorizes Cleavr by its extension id (checked
+      against the one origin the daemon expects) and by only accepting
+      loopback connections.
+    </p>
+
+    <form id="options-form">
+      <label for="port">Daemon port</label>
+      <input id="port" type="number" min="1" max="65535" placeholder="7717" autocomplete="off" />
+      <div id="port-error" class="error" hidden></div>
+
+      <div>
+        <button type="submit">Save</button>
+        <button type="button" id="test-connection">Test connection</button>
+      </div>
+      <div id="save-result"></div>
+      <div id="test-result"></div>
+    </form>
+    <script src="options.js"></script>
+  </body>
+</html>

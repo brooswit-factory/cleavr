@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-e2e/
+*.log
+.DS_Store
+*.pem
+.env*

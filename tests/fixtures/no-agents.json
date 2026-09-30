@@ -1,0 +1,6 @@
+{
+  "url": "https://example.atlassian.net/browse/PROJ-1",
+  "canonicalUrl": "https://example.atlassian.net/browse/PROJ-1",
+  "resource": { "provider": "jira", "id": "PROJ-1" },
+  "agents": []
+}

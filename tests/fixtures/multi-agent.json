@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/brooswit-factory/cleavr/pull/1",
+  "canonicalUrl": "https://github.com/brooswit-factory/cleavr/pull/1",
+  "resource": { "provider": "github", "id": "brooswit-factory/cleavr#1" },
+  "agents": [
+    { "agentKey": "a1", "ruleId": "r1", "pane": "main", "live": true, "label": "PR review agent" },
+    { "agentKey": "a2", "ruleId": "r2", "pane": null, "live": false, "label": "Story agent" }
+  ]
+}

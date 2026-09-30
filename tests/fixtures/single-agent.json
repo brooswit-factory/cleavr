@@ -1,0 +1,8 @@
+{
+  "url": "https://example.atlassian.net/browse/PROJ-1",
+  "canonicalUrl": "https://example.atlassian.net/browse/PROJ-1",
+  "resource": { "provider": "jira", "id": "PROJ-1" },
+  "agents": [
+    { "agentKey": "a1", "ruleId": "r1", "pane": "main", "live": true, "label": "PROJ-1 task agent" }
+  ]
+}
