@@ -1,6 +1,6 @@
 {
   "name": "cleavr",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "description": "Chrome MV3 extension shell for Cleavr: slide-out panel, options page, agent picker.",
   "type": "module",

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cleavr",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArYPzte4S+20Nm6fG+R3LMKwyxRKSGCoGcJAEvHbZzRa9KQRdx28Y0JW2vuhImoCkD1cRDiDIA6augDFvmEJYH+vbwRnOEL57tfjmiqvXQ15AJkc8ME/gn68PC7IhgYvd6Cj0dy6pBHXaUDU42InmUFi4QA60G6GJ3Z68I3kSJvYZnxtOgSmaqvJB/DC2PI0V6L9pgoxbSreakkXlMTYXXOCBi5WPz4JPgmA0VTGWs+fSQGe3c/+85W1ZngkIBsUIJwoBDpoLsBN0h6PRW/lDAaMPJHbTwm67iN5ek3ThRk/CEJGeEFyGByintEzSMfym+Qplqj5ib3xI3WUcmu6dJwIDAQAB",
   "description": "Slide out a Butchr agent panel for the page you're on.",
   "action": {

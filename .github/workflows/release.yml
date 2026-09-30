@@ -1,0 +1,79 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build and upload the zip as a workflow artifact only; do not create a GitHub Release"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Resolve tag and version
+        id: ver
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "${{ github.event_name }}" = "push" ]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          else
+            TAG="v$VERSION"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Check tag matches manifest/package version
+        env:
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: node scripts/release.mjs check-tag "$TAG"
+
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      - name: Stamp build identity (dist/manifest.json only)
+        run: node scripts/release.mjs stamp dist/manifest.json "$(git rev-parse --short HEAD)"
+
+      - name: Zip dist/
+        run: node scripts/release.mjs zip dist "cleavr-${{ steps.ver.outputs.version }}.zip"
+
+      - name: Extract CHANGELOG section as release notes
+        run: node scripts/release.mjs changelog "${{ steps.ver.outputs.version }}" > release-notes.md
+
+      - name: Upload zip as a workflow artifact (dry run)
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run
+        uses: actions/upload-artifact@v4
+        with:
+          name: cleavr-${{ steps.ver.outputs.version }}
+          path: cleavr-${{ steps.ver.outputs.version }}.zip
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ver.outputs.tag }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          gh release create "$TAG" \
+            "cleavr-${VERSION}.zip" \
+            --title "$TAG" \
+            --notes-file release-notes.md

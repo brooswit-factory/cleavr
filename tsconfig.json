@@ -13,5 +13,5 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["src", "tests", "build.mjs", "scripts/extension-id.d.mts"]
+  "include": ["src", "tests", "build.mjs", "scripts/extension-id.d.mts", "scripts/release.d.mts"]
 }

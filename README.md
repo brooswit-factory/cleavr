@@ -64,6 +64,24 @@ fake in-memory socket (`tests/pty/fake-opener.ts`) and, for headless
 evidence, against a real local socket server that mimics the documented wire
 shapes (see "End-to-end evidence" below).
 
+## Install (from a Release)
+
+Cleavr is distributed via [GitHub Releases](https://github.com/brooswit-factory/cleavr/releases), not the Chrome Web Store.
+
+1. Download `cleavr-<version>.zip` from the latest Release and unzip it.
+2. In Chrome, go to `chrome://extensions`, enable "Developer mode" (top
+   right), click "Load unpacked", and select the unzipped directory (the
+   `manifest.json` sits at its root, so no extra navigation is needed).
+3. First use may show up under Chrome's "Access requested" prompt — allow
+   it.
+4. After updating to a new release, unzip it over (or alongside) the old
+   copy and click the reload icon on the extension's card in
+   `chrome://extensions` — Chrome does not pick up a changed `dist/`
+   automatically.
+
+`manifest.json`'s `"key"` is fixed (see "Fixed extension id" below), so the
+extension id stays the same across releases.
+
 ## Install (unpacked, for development)
 
 1. `npm install`
