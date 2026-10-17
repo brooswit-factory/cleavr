@@ -7,6 +7,7 @@ import {
   buildZip,
   checkTagMatchesVersion,
   extractChangelogSection,
+  gitDescribe,
   stampVersionName,
   versionFromTag,
 } from "../scripts/release.mjs";
@@ -52,6 +53,33 @@ describe("stampVersionName", () => {
     expect(stamped).toBe("0.1.3+a1b2c3d");
     const written = JSON.parse(readFileSync(manifestPath, "utf8"));
     expect(written).toEqual({ name: "Cleavr", version: "0.1.3", key: "abc", version_name: "0.1.3+a1b2c3d" });
+  });
+});
+
+describe("gitDescribe", () => {
+  function initRepo(dir: string) {
+    execFileSync("git", ["init", "-q"], { cwd: dir });
+    execFileSync("git", ["config", "user.email", "test@example.com"], { cwd: dir });
+    execFileSync("git", ["config", "user.name", "Test"], { cwd: dir });
+    writeFileSync(join(dir, "f.txt"), "a");
+    execFileSync("git", ["add", "."], { cwd: dir });
+    execFileSync("git", ["commit", "-q", "-m", "init"], { cwd: dir });
+    return execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: dir, encoding: "utf8" }).trim();
+  }
+
+  it("returns the bare short hash on a clean tree", () => {
+    const dir = makeTmpDir();
+    const hash = initRepo(dir);
+
+    expect(gitDescribe(dir)).toBe(hash);
+  });
+
+  it("appends -dirty when the tree has uncommitted changes", () => {
+    const dir = makeTmpDir();
+    const hash = initRepo(dir);
+    writeFileSync(join(dir, "f.txt"), "b");
+
+    expect(gitDescribe(dir)).toBe(`${hash}-dirty`);
   });
 });
 

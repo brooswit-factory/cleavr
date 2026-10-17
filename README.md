@@ -72,15 +72,24 @@ Cleavr is distributed via [GitHub Releases](https://github.com/brooswit-factory/
 2. In Chrome, go to `chrome://extensions`, enable "Developer mode" (top
    right), click "Load unpacked", and select the unzipped directory (the
    `manifest.json` sits at its root, so no extra navigation is needed).
-3. First use may show up under Chrome's "Access requested" prompt — allow
-   it.
+3. A freshly loaded unpacked extension starts with site access set to
+   **"On click"**, so nothing shows up in the toolbar's puzzle-piece
+   ("Extensions") menu under "Access requested" until you visit a page and
+   click the Cleavr icon — allow it there. Pinning the icon (the pin button
+   in that same menu) is optional.
 4. After updating to a new release, unzip it over (or alongside) the old
    copy and click the reload icon on the extension's card in
    `chrome://extensions` — Chrome does not pick up a changed `dist/`
-   automatically.
+   automatically. The card's version line is `<version>+<git hash>`
+   (`manifest.json`'s `version_name`, stamped by the release workflow); if
+   it still shows the old hash after a reload, the reload didn't take.
 
 `manifest.json`'s `"key"` is fixed (see "Fixed extension id" below), so the
-extension id stays the same across releases.
+extension id stays the same across releases. If you have an older Cleavr
+entry in `chrome://extensions` from before this repo's `manifest.json` had
+a `"key"` field, its id was derived from its load path instead and will
+not match the id below — remove that old entry and load this keyed build
+instead.
 
 ## Install (unpacked, for development)
 
@@ -95,12 +104,22 @@ extension id stays the same across releases.
    fresh install from ANY path/machine attaches with no daemon config
    needed. Nothing here ever loosens or widens that check beyond this one
    fixed id — that would defeat the entire point of it.
-5. Click the Cleavr icon in the toolbar on any page to toggle the panel.
-6. Right-click the Cleavr icon → Options (or find it under the extension's
+5. Like any freshly loaded unpacked extension, this one starts with site
+   access set to **"On click"** — it won't appear under the toolbar's
+   puzzle-piece ("Extensions") menu's "Access requested" section until you
+   visit a page and click the Cleavr icon; allow it there. Pinning the
+   icon is optional.
+6. Click the Cleavr icon in the toolbar on any page to toggle the panel.
+7. Right-click the Cleavr icon → Options (or find it under the extension's
    details page) to set your daemon URL — see below.
 
 Re-run `npm run build` and click the reload icon on `chrome://extensions`
-after making changes.
+after making changes — Chrome does not pick up a changed `dist/`
+automatically, same as the Release install above. Every build (including
+this local one) stamps `version_name` with the current git short hash,
+`-dirty` appended if the tree has uncommitted changes, so the extension
+card's version line tells you whether the reload actually picked up the
+build you just made.
 
 ### Fixed extension id (manifest `"key"`)
 

@@ -16,6 +16,16 @@ export function checkTagMatchesVersion(tag, version) {
   }
 }
 
+// The git identity of the current checkout, suffixed "-dirty" when the
+// working tree has uncommitted changes — so a local build carries a
+// different stamp than the commit it was built from once anything is
+// edited, instead of looking identical to a fresh checkout's build.
+export function gitDescribe(cwd = process.cwd()) {
+  const hash = execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd, encoding: "utf8" }).trim();
+  const isDirty = execFileSync("git", ["status", "--porcelain"], { cwd, encoding: "utf8" }).trim().length > 0;
+  return isDirty ? `${hash}-dirty` : hash;
+}
+
 // Stamps the git short hash into the BUILT dist/manifest.json's
 // version_name, so the extension card shows which build it is. Never
 // touches the committed manifest.json — this is the FACTORY-495 stamp.
