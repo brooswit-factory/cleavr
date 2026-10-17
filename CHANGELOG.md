@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5
+
+### Added
+
+- FACTORY-495: `npm run build` now stamps `dist/manifest.json`'s `version_name` on every build, not just tagged CI releases — `scripts/release.mjs` exports a new `gitDescribe()` (git short hash, `-dirty` appended when the tree has uncommitted changes) that `build.mjs` feeds into the existing `stampVersionName()`. This is what the extension card shows after a "Load unpacked" dev build, so a stale cached build no longer looks identical to a fresh one. README's two install sections now also cover: checking `version_name` to confirm a reload picked up the new build, the default "On click" site access on a freshly loaded unpacked extension (and that pinning is optional), and removing an old path-derived extension id in favor of this repo's keyed one.
+
 ## 0.1.4
 
 ### Added
